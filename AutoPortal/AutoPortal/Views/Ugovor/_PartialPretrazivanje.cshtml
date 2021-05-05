@@ -1,0 +1,78 @@
+﻿@using AutoPortal.Models
+@using PagedList.Mvc
+@model PagedList.IPagedList<Ugovor>
+@{
+    AjaxOptions ajaxOp = new AjaxOptions()
+    {
+        UpdateTargetId = "popisUgovor",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnBegin = "LoadingRow"
+    };
+}
+
+<div id="popisUgovor">
+    <table id="ugovor" class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>
+                    @Ajax.ActionLink("Mail", "PretrazivanjePartial",
+                        new { Mail_Ug = ViewBag.Mail, Model = ViewBag.Model, Datum = ViewBag.Datum, sort = ViewBag.MailSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Model", "PretrazivanjePartial",
+                        new { Mail_Ug = ViewBag.Mail, Model = ViewBag.Model, Datum = ViewBag.Datum, sort = ViewBag.ModelSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Datum", "PretrazivanjePartial",
+                        new { Mail_Ug = ViewBag.Mail, Model = ViewBag.Model, Datum = ViewBag.Datum, sort = ViewBag.DatumSort }, ajaxOp)
+                </th>
+                <th>Vrijeme_OD</th>
+                <th>Vrijeme_DO</th>
+                <th>Obriši</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var ugovor in Model)
+                {
+                    <tr>
+                        <td>@ugovor.IdUgovor</td>
+                        <td>@ugovor.Mail_Ug</td>
+                        <td>@ugovor.Model</td>
+                        <td>@ugovor.Datum.ToShortDateString()</td>
+                        <td>@ugovor.Vrijeme_Od</td>
+                        <td>@ugovor.Vrijeme_Do</td>
+                        <td>
+                            @Html.ActionLink("Obriši", "Delete", new { id = ugovor.IdUgovor }, new
+                            {
+                                @class = "btn btn-danger",
+                                @id = "UgovorDelete",
+                                @data_url = Url.Action("Delete", "Ugovor", new { id = ugovor.IdUgovor })
+                            })
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="12" style="text-align:center">Nema sastanaka</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="pager">
+        Ukupno rezultata: @Model.TotalItemCount <br />
+
+        Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("PretrazivanjePartial",
+            new { page, Mail_Ug = ViewBag.Mail, Model = ViewBag.Model, Datum = ViewBag.Datum, sort = ViewBag.Sortiranje }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(ajaxOp))
+    </div>
+</div>

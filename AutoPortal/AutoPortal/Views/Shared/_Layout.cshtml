@@ -1,0 +1,94 @@
+﻿@using AutoPortal.Misc
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script>
+        function sat() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('sattxt').innerHTML =
+                h + ":" + m + ":" + s;
+            var t = setTimeout(sat, 1000);
+        }
+        function checkTime(i) {
+            if (i < 10) { i = "0" + i };
+            return i;
+        }
+    </script>
+</head>
+<body onload="sat()">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Auto Portal","Index","Home",new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("O nama", "About", "Home")</li>
+                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Pretraži", "Pretrazivanje", "Home")</li>
+                    }
+                    @if (User.Identity.IsAuthenticated && (User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Administrator))
+                    {
+                        <li>@Html.ActionLink("Dodaj auto", "Create", "Home")</li>
+                        <li>@Html.ActionLink("Sastanci", "Pretrazivanje", "Ugovor")</li>
+                        <li>@Html.ActionLink("Korisnici", "Popis", "Korisnik")</li>
+                        <li>@Html.ActionLink("Dodaj admina", "DodajAdmin", "Korisnik")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                @((User as LogiraniKorisnik).KorisnickoIme)
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Uredi", "Azuriraj", "Korisnik", new { id = ((User as LogiraniKorisnik).KorisnickoIme) }, null)</li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("Odjava", "Odjava", "Korisnik")</li>
+                        <li><p id="sattxt" style="color:darkgrey;vertical-align:middle;margin-top:28%;margin-left:20%"></p></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Registracija", "Registracija", "Korisnik")</li>
+                        <li>@Html.ActionLink("Prijava", "Prijava", "Korisnik")</li>
+                        <li><p id="sattxt" style="color:darkgrey;vertical-align:middle;margin-top:28%;margin-left:20%"></p></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year -  Auto Portal</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

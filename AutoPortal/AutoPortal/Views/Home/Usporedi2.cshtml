@@ -1,0 +1,224 @@
+﻿@using AutoPortal.Models
+@model List<Auto>
+@{
+    ViewBag.Title = "Usporedba - Auto Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imagepath1 = @"/Slike/Marke/" + Model[0].Marka.ToString() + "/" + Model[0].Marka.ToString() + " " + Model[0].Model.ToString() + ".jpg";
+    var imagepath2 = @"/Slike/Marke/" + Model[1].Marka.ToString() + "/" + Model[1].Marka.ToString() + " " + Model[1].Model.ToString() + ".jpg";
+}
+
+<link href="~/CSS/StyleSheet.css" rel="Stylesheet" type="text/css" />
+
+<div class="text-center" style="font-style:italic">
+    <h1 class="wrapper">Usporedba</h1>
+</div>
+
+<div class="row" style="margin-top:15px">
+    <div class="col-md-2 text-center" style="font-size:large">
+    </div>
+    <div class="col-md-5 text-center" style="font-size:large">
+        <h1>@Model[0].Marka @Model[0].Model</h1>
+    </div>
+    <div class="col-md-5 text-center" style="font-size:large">
+        <h1>@Model[1].Marka @Model[1].Model</h1>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+    </div>
+    <div style="margin-top:15px" class="col-md-5">
+        <img src="@imagepath1" class="img-responsive img-rounded" style="height:100%; width:100%" onerror="src='/Slike/Default/noimage.jpg'" />
+    </div>
+    <div style="margin-top:15px" class="col-md-5">
+        <img src="@imagepath2" class="img-responsive img-rounded" style="height:100%; width:100%" onerror="src='/Slike/Default/noimage.jpg'" />
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+        <strong><em>Obujam :</em></strong>
+    </div>
+    @if (Model[0].Obujam > Model[1].Obujam)
+    {
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[0].Obujam Cm<sup>3</sup>
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Obujam Cm<sup>3</sup>
+        </div>
+    }
+    else if (Model[0].Obujam == Model[1].Obujam)
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Obujam Cm<sup>3</sup>
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Obujam Cm<sup>3</sup>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Obujam Cm<sup>3</sup>
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[1].Obujam Cm<sup>3</sup>
+        </div>
+    }
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+        <strong><em>Snaga :</em></strong>
+    </div>
+    @if (Model[0].Snaga > Model[1].Snaga)
+    {
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[0].Snaga KS
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Snaga KS
+        </div>
+    }
+    else if (Model[0].Snaga == Model[1].Snaga)
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Snaga KS
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Snaga KS
+        </div>
+    }
+    else
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Snaga KS
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[1].Snaga KS
+        </div>
+    }
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+        <strong><em>Kilaža :</em></strong>
+    </div>
+    @if (Model[0].Kilaza < Model[1].Kilaza)
+    {
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[0].Kilaza Kg
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Kilaza Kg
+        </div>
+    }
+    else if (Model[0].Kilaza == Model[1].Kilaza)
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Kilaza Kg
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Kilaza Kg
+        </div>
+    }
+    else
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Kilaza Kg
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[1].Kilaza Kg
+        </div>
+    }
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+        <strong><em>Max Brzina :</em></strong>
+    </div>
+    @if (Model[0].Max_Brzina > Model[1].Max_Brzina)
+    {
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[0].Max_Brzina Kmh
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Max_Brzina Kmh
+        </div>
+    }
+    else if (Model[0].Max_Brzina == Model[1].Max_Brzina)
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Max_Brzina Kmh
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Max_Brzina Kmh
+        </div>
+    }
+    else
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Max_Brzina Kmh
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[1].Max_Brzina Kmh
+        </div>
+    }
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+        <strong><em>Ubrzanje :</em></strong>
+    </div>
+    @if (Model[0].Ubrzanje < Model[1].Ubrzanje)
+    {
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[0].Ubrzanje s
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Ubrzanje s
+        </div>
+    }
+    else if (Model[0].Ubrzanje == Model[1].Ubrzanje)
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Ubrzanje s
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[1].Ubrzanje s
+        </div>
+    }
+    else
+    {
+        <div class="col-md-5 text-center" style="font-size:large">
+            @Model[0].Ubrzanje s
+        </div>
+        <div class="col-md-5 text-center" style="font-size:large;color:limegreen">
+            @Model[1].Ubrzanje s
+        </div>
+    }
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+        <strong><em>Cijena :</em></strong>
+    </div>
+    <div class="col-md-5 text-center" style="font-size:large">
+        @Model[0].Cijena Kn
+    </div>
+    <div class="col-md-5 text-center" style="font-size:large">
+        @Model[1].Cijena Kn
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2 text-center" style="font-size:large">
+    </div>
+    <div class="col-md-5 text-center" style="font-size:large">
+        <a href="@Url.Action("Detalji","Home", new { id = Model[0].IdAuto })" class="btn btn-primary btn-lg" style="width:40%">Detalji</a>
+    </div>
+    <div class="col-md-5 text-center" style="font-size:large">
+        <a href="@Url.Action("Detalji","Home", new { id = Model[1].IdAuto })" class="btn btn-primary btn-lg" style="width:40%">Detalji</a>
+    </div>
+</div>

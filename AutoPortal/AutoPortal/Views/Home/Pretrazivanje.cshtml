@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Pretrazivanje - Auto Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    AjaxOptions ajaxOp = new AjaxOptions()
+    {
+        UpdateTargetId = "popisAuta",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnBegin = "LoadingRow"
+    };
+}
+
+<link href="~/CSS/StyleSheet.css" rel="Stylesheet" type="text/css" />
+
+<div class="text-center" style="font-style:italic">
+    <h1 class="wrapper">Pretraživanje</h1>
+</div>
+
+<br />
+<br />
+
+@using (Ajax.BeginForm("PretrazivanjePartial", "Home", ajaxOp, new { @class = "form-inline", id = "formPopisAuta" }))
+{
+
+    @Html.TextBox("Marka", "", new { @class = "form-control", placeholder = "Marka" })
+
+    @Html.TextBox("Model", "", new { @class = "form-control", placeholder = "Model", style = "margin-left:15px" })
+
+    <button type="submit" class="btn btn-primary" style="margin-left:15px">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Traži
+    </button>
+
+}
+
+@{Html.RenderAction("PretrazivanjePartial", new { marka = "", model = "" });}
+
+@section scripts{
+    <script type="text/javascript">
+        function LoadingRow() {
+            $("#auto tbody").empty();
+            $("#auto tbody").append('<tr><td colspan="7" style="text-align:center">Pretraga u tijeku...</td></tr>');
+            $("#pager").empty();
+        }
+    </script>
+}

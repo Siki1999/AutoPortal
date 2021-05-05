@@ -1,0 +1,56 @@
+﻿@model AutoPortal.Models.Auto
+
+@{
+    ViewBag.Title = "Brisanje - Auto Portal";
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>
+            <h4 class="modal-title text-center">Obriši</h4>
+        </div>
+
+        <div class="modal-body" style="text-align:center;width: 400px; margin-left: auto; margin-right:auto;">
+
+            <h2>Jeste li sigurni da želite obrisati zapis?</h2>
+            <div>
+                <h4>Auto</h4>
+                <hr />
+                <dl class="dl-horizontal text-left">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Marka)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Marka)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Model)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Model)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="modal-footer">
+            @using (Ajax.BeginForm("Delete", "Home", new { id = Model.IdAuto }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "DeleteSuccess", OnFailure = "DeleteError" }, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" style="margin-right:68%">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>   Nazad
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Obriši
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

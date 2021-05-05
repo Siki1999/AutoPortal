@@ -1,0 +1,78 @@
+﻿@using AutoPortal.Models
+@model List<Korisnik>
+@{
+    ViewBag.Title = "Popis korisnika - Auto Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    AjaxOptions ajaxOp = new AjaxOptions()
+    {
+        UpdateTargetId = "popisKorisnika",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnBegin = "LoadingRow"
+    };
+}
+
+<link href="~/CSS/StyleSheet.css" rel="Stylesheet" type="text/css" />
+
+<div class="text-center" style="font-style:italic">
+    <h1 class="wrapper">Popis korisnika</h1>
+</div>
+
+@using (Ajax.BeginForm("PretrazivanjePartial", "Korisnik", ajaxOp, new { @class = "form-inline", id = "formPopisKorisnika" }))
+{
+
+    @Html.TextBox("KorisnickoIme", "", new { @class = "form-control", placeholder = "Korisnicko ime" })
+
+    @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "Email", style = "margin-left:15px" })
+
+    @Html.TextBox("Ime", "", new { @class = "form-control", placeholder = "Ime", style = "margin-left:15px" })
+
+    @Html.TextBox("Prezime", "", new { @class = "form-control", placeholder = "Prezime", style = "margin-left:15px" })
+
+    @Html.DropDownList("Naziv", new SelectList(ViewBag.Ovlasti, "Sifra", "Naziv", ""),"", new { @class = "form-control", style = "margin-left:15px" })
+
+    <button type="submit" class="btn btn-primary" style="margin-left:15px">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Traži
+    </button>
+
+}
+
+<div class="modal" id="modalView" tabindex="-1" role="dialog" aria-labelledby="modalView" aria-hidden="true" data-backdrop="static">
+    <div id="viewContainer">
+
+    </div>
+</div>
+
+@{Html.RenderAction("PretrazivanjePartial", new { KorisnickoIme = "", Email = "", Ime = "", Prezime = "" , Naziv=""});}
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).on('click', '#KorisnikDelete', function () {
+            event.preventDefault();
+            var url = $(this).attr("data-url");
+
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $('#viewContainer').html(data);
+                    $('#modalView').modal('show');
+                },
+                error: function (xhr, textStatus, thrownError) { alert(xhr.responseText); }
+            });
+        });
+
+        function DeleteSuccess() {
+            $('#modalView').modal('hide');
+            $('#viewContainer').html("");
+            bootbox.alert("<div class='text-center'><b>Korisnik izbrisan!!!!</b></div>", function () {
+                location.reload();
+            });
+        }
+
+        function LoadingRow() {
+            $("#korisnik tbody").empty();
+            $("#korisnik tbody").append('<tr><td colspan="7" style="text-align:center">Pretraga u tijeku...</td></tr>');
+            $("#pager").empty();
+        }
+    </script>
+}

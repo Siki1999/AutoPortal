@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "O nama - Auto Portal";
+}
+
+<link href="~/CSS/StyleSheet.css" rel="Stylesheet" type="text/css" />
+
+<div class="text-center" style="font-style:italic">
+    <h1 class="wrapper">O nama</h1>
+</div>
+
+<div class="row" style="margin-top:60px">
+    <div class="col-md-6 img-responsive" style="text-align:center">
+        <img src="~/Slike/AboutUs/h.png" alt="About Us" height="400" width="550" class="img-rounded">
+    </div>
+    <div class="col-md-6" style="text-align:center; font-size:larger; font-family:'Times New Roman'; font-style:italic; margin-top:120px;">
+
+        <p>AutoPortal je aplikacija koja Vam omogućava lakšu kupnju automobila.</p>
+        <p>Da biste izbjegli nepotrebne pozive i dogovaranje kupnje automobila mi smo tu zbog toga.</p>
+        <p>Naša aplikacija Vam omogućuje jednostavnu pretragu željenog automobila.</p>
+        <br />
+    </div>
+
+    <div class="col-md-6" style="text-align:center">
+        <a href="@Url.Action("Contact","Home")" class="btn btn-lg btn-primary"> Kontakti </a>
+    </div>
+
+</div>

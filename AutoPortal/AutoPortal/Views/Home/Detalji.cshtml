@@ -1,0 +1,373 @@
+﻿@using AutoPortal.Models
+@using AutoPortal.Misc
+@model Auto
+@{
+    ViewBag.Title = "Detalji - Auto Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imagepath = @"/Slike/Marke/" + Model.Marka.ToString() + "/" + Model.Marka.ToString() + " " + Model.Model.ToString() + ".jpg";
+}
+
+<link href="~/CSS/StyleSheet.css" rel="Stylesheet" type="text/css" />
+<style>
+    .thank-you-pop {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+
+        .thank-you-pop img {
+            width: 76px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .thank-you-pop h1 {
+            font-size: 42px;
+            margin-bottom: 25px;
+            color: #5C5C5C;
+        }
+
+        .thank-you-pop p {
+            font-size: 20px;
+            margin-bottom: 27px;
+            color: #5C5C5C;
+        }
+
+        .thank-you-pop h3.cupon-pop {
+            font-size: 25px;
+            margin-bottom: 40px;
+            color: #222;
+            display: inline-block;
+            text-align: center;
+            padding: 10px 20px;
+            border: 2px dashed #222;
+            clear: both;
+            font-weight: normal;
+        }
+
+            .thank-you-pop h3.cupon-pop span {
+                color: #03A9F4;
+            }
+
+        .thank-you-pop a {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 9px 20px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+            background-color: #8BC34A;
+            border-radius: 17px;
+        }
+
+            .thank-you-pop a i {
+                margin-right: 5px;
+                color: #fff;
+            }
+
+    .dropdown-menu {
+        position: absolute;
+        left: inherit;
+        right: inherit;
+    }
+
+    a.drop:hover {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    a.drop {
+        color: black;
+        width: 100%;
+    }
+
+    .divider {
+        border: 1px solid #C5C5C5;
+    }
+</style>
+
+
+<div class="container" id="auto">
+    <div class="text-center">
+        <h1 class="wrapper" style="margin-top:15px">@Model.Marka @Model.Model</h1>
+    </div>
+    @if (User.Identity.IsAuthenticated && (User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Administrator))
+    {
+        <div class="row">
+            <div class="col-md-3 col-md-offset-2">
+                @Html.ActionLink("Ažuriraj", "Edit", "Home", new { id = Model.IdAuto }, new
+                {
+                    @class = "btn btn-warning btn-lg",
+                    @id = "AutoEdit",
+                    @data_url = Url.Action("Edit", "Home", new { id = Model.IdAuto })
+                })
+            </div>
+            <div class="dropdown col-md-2 text-center">
+                <button type="button" class="btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown">
+                    Dodaj sliku
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <div>
+                        @Html.ActionLink("Logo marke", "DodajLogo", new { id = Model.IdAuto }, new
+                        {
+                            @class = "btn drop",
+                            @id = "DodajLogo",
+                            @data_url = Url.Action("DodajLogo", "Home", new { id = Model.IdAuto })
+                        })
+                    </div>
+                    <div class="divider"></div>
+                    <div>
+                        @Html.ActionLink("Sliku modela", "DodajSliku", new { id = Model.IdAuto }, new
+                        {
+                            @class = "btn drop",
+                            @id = "DodajSliku",
+                            @data_url = Url.Action("DodajSliku", "Home", new { id = Model.IdAuto })
+                        })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-right">
+                @Html.ActionLink("Obriši", "Delete", new { id = Model.IdAuto }, new
+                {
+                    @class = "btn btn-danger btn-lg",
+                    @id = "AutoDelete",
+                    @data_url = Url.Action("Delete", "Home", new { id = Model.IdAuto })
+                })
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div style="margin-top:15px" class="col-md-8 col-md-offset-2">
+            <img src="@imagepath" class="img-responsive img-rounded" style="height:100%; width:100%" onerror="src='/Slike/Default/noimage.jpg'" />
+        </div>
+    </div>
+    <br />
+    <div class="row" style="margin-top:15px">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Marka :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Marka
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Model :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Model
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Obujam :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Obujam Cm<sup>3</sup>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Snaga :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Snaga KS
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Kilaža :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Kilaza Kg
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Maksimalna brzina :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Max_Brzina Kmh
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Ubrzanje (0-100) :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Ubrzanje s
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 text-center" style="font-size:large">
+            <strong><em>Cijena :</em></strong>
+        </div>
+        <div class="col-md-6 text-center" style="font-size:large">
+            @Model.Cijena Kn
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4 text-center" style="margin-top:15px">
+            <a href="@Url.Action("Generiraj", "PDF", new { car = Model.Model })" class="btn btn-primary btn-lg">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Kreiraj PDF
+            </a>
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div style="margin-top:15px" class="col-md-4 text-center">
+                <a href="@Url.Action("Usporedi", "Home", new { id = Model.IdAuto })" class="btn btn-lg btn-warning">Usporedi</a>
+            </div>
+            <div style="margin-top:15px" class="col-md-4 text-center">
+                @Html.ActionLink("Ugovori sastanak", "Create", "Ugovor", new { id = Model.IdAuto, ime = ((User as LogiraniKorisnik).KorisnickoIme) }, new
+           {
+               @class = "btn btn-success btn-lg",
+               @id = "ugovor",
+               @data_url = Url.Action("Create", "Ugovor", new { id = Model.IdAuto, ime = ((User as LogiraniKorisnik).KorisnickoIme) })
+           }
+                    )
+            </div>
+        }
+        else
+        {
+            <div style="margin-top:15px" class="col-md-4 text-center">
+                <a data-toggle="tooltip" data-placement="top" title="Kako bih ste koristili ovu funkciju molimo Vas da se prijavite" class="btn btn-lg btn-warning" disabled>Usporedi</a>
+            </div>
+            <div style="margin-top:15px" class="col-md-4 text-center">
+                <a data-toggle="tooltip" data-placement="top" title="Kako bih ste koristili ovu funkciju molimo Vas da se prijavite" class="btn btn-success btn-lg" disabled>Ugovori sastanak</a>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal" id="modalView" tabindex="-1" role="dialog" aria-labelledby="modalView" aria-hidden="true" data-backdrop="static">
+    <div id="viewContainer">
+
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#uspijeh").on("click", function (event) {
+                event.preventDefault();
+
+                var url = $(this).attr("data-url");
+                $.get(url, function (data) {
+                    $('#viewContainer').html(data);
+                    $('#modalView').modal('show');
+                });
+            });
+
+            $('#AutoEdit').on("click", function (event) {
+                event.preventDefault();
+                var url = $(this).attr("data-url");
+
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        $('#viewContainer').html(data);
+                        $('#modalView').modal('show');
+                    },
+                    error: function (xhr, textStatus, thrownError) { alert(xhr.responseText); }
+                });
+            });
+
+            $('#AutoDelete').on("click", function (event) {
+                event.preventDefault();
+                var url = $(this).attr("data-url");
+
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        $('#viewContainer').html(data);
+                        $('#modalView').modal('show');
+                    },
+                    error: function (xhr, textStatus, thrownError) { alert(xhr.responseText); }
+                });
+            });
+
+            $('#ugovor').on("click", function (event) {
+                event.preventDefault();
+                var url = $(this).attr("data-url");
+
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        $('#viewContainer').html(data);
+                        $('#modalView').modal('show');
+                    },
+                    error: function (xhr, textStatus, thrownError) { alert(xhr.responseText); }
+                });
+            });
+
+            $("#DodajLogo").on("click", function (event) {
+                event.preventDefault();
+
+                var url = $(this).attr("data-url");
+                $.get(url, function (data) {
+                    $('#viewContainer').html(data);
+                    $('#modalView').modal('show');
+                });
+            });
+
+            $("#DodajSliku").on("click", function (event) {
+                event.preventDefault();
+
+                var url = $(this).attr("data-url");
+                $.get(url, function (data) {
+                    $('#viewContainer').html(data);
+                    $('#modalView').modal('show');
+                });
+            });
+
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        });
+
+        function EditSuccess(data) {
+            if (data.indexOf("field-validation-error") > -1 || data.indexOf("validation-summary-errors") > -1) {
+                return;
+            }
+
+            $('#modalView').modal('hide');
+            $('#viewContainer').html("");
+            bootbox.alert("<div class='text-center'><b>Zapis ažuriran!</b></div>", function () {
+                location.reload(true);
+            });
+        }
+
+        function DeleteSuccess() {
+            $('#modalView').modal('hide');
+            $('#viewContainer').html("");
+            bootbox.alert("<div class='text-center'><b>Zapis izbrisan!!!!</b></div>", function () {
+                location.reload();
+            });
+
+        }
+
+        function UgovorSuccess(data) {
+            if (data.indexOf("field-validation-error") > -1 || data.indexOf("validation-summary-errors") > -1) {
+                return;
+            }
+
+            $('#modalView').modal('hide');
+            $('#viewContainer').html("");
+            bootbox.alert("<div class='text-center'><b>Zapis spremljen!!!!</b></div>", function () {
+                location.reload(true);
+            });
+        }
+    </script>
+}

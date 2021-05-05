@@ -1,0 +1,59 @@
+﻿@using AutoPortal.Misc
+@model AutoPortal.Models.KorisnikResetLozinke
+@{
+    ViewBag.Title = "Resetiranje lozinke - Auto Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/CSS/StyleSheet.css" rel="Stylesheet" type="text/css" />
+
+<div class="text-center" style="font-style:italic">
+    <h1 class="wrapper">Resetiranje lozinke</h1>
+</div>
+
+<div class="container" style="text-align:center;width: 500px; margin-left: auto; margin-right:auto;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>@Html.LabelFor(model => model.KorisnickoIme): @Model.KorisnickoIme </h4>
+            @Html.HiddenFor(model => model.KorisnickoIme)
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Lozinka, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Lozinka2, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Lozinka2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Lozinka2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-6">
+                    <a href="@Url.Action("Azuriraj", "Korisnik", new { id = ((User as LogiraniKorisnik).KorisnickoIme) })" class="btn btn-info">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>   Nazad
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="false"></span>  Spremi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

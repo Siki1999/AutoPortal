@@ -1,0 +1,99 @@
+﻿@using AutoPortal.Models
+@using PagedList.Mvc
+@using AutoPortal.Misc
+@model PagedList.IPagedList<Auto>
+@{
+    AjaxOptions ajaxOp = new AjaxOptions()
+    {
+        UpdateTargetId = "popisAuta",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnBegin = "LoadingRow"
+    };
+}
+
+<div id="popisAuta">
+    <table id="auto" class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                @if (User.Identity.IsAuthenticated && (User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Administrator))
+                {
+                    <th>Id</th>
+                }
+                <th>
+                    @Ajax.ActionLink("Marka", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.MarkaSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Model", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.ModelSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Obujam", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.ObujamSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Snaga", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.SnagaSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Kilaža", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.KilazaSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Max brzina", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.BrzinaSort }, ajaxOp)
+                </th>
+                <th>
+                    @Ajax.ActionLink("Ubrzanje", "PretrazivanjePartial",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.UbrzanjeSort }, ajaxOp)
+                </th>
+                <th>Cijena</th>
+                <th>Detalji</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var auto in Model)
+                {
+                    <tr>
+                        @if (User.Identity.IsAuthenticated && (User as LogiraniKorisnik).IsInRole(OvlastiKorisnik.Administrator))
+                        {
+                            <td>@auto.IdAuto</td>
+                        }
+                        <td>@auto.Marka</td>
+                        <td>@auto.Model</td>
+                        <td>@auto.Obujam</td>
+                        <td>@auto.Snaga</td>
+                        <td>@auto.Kilaza</td>
+                        <td>@auto.Max_Brzina</td>
+                        <td>@auto.Ubrzanje</td>
+                        <td>@auto.Cijena</td>
+                        <td>
+                            <a href="@Url.Action("Detalji","Home", new { id = auto.IdAuto })" class="btn btn-primary">Detalji</a>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="12" style="text-align:center">Nema rezultata pretrage</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="pager">
+        Ukupno rezultata: @Model.TotalItemCount <br />
+
+        Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("PretrazivanjePartial",
+            new { page, marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.Sortiranje }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(ajaxOp))
+    </div>
+</div>
+

@@ -1,0 +1,64 @@
+﻿@using AutoPortal.Models
+@using PagedList.Mvc
+@model PagedList.IPagedList<Auto>
+@{
+    AjaxOptions ajaxOp = new AjaxOptions()
+    {
+        UpdateTargetId = "popisAuta",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnBegin = "LoadingRow"
+    };
+}
+
+<div id="popisAuta">
+    <table id="auto" class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    @Ajax.ActionLink("Marka", "PretrazivanjePartial2",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.MarkaSort, id = ViewBag.auto1 }, ajaxOp)
+                </th>
+                <th class="text-center">
+                    @Ajax.ActionLink("Model", "PretrazivanjePartial2",
+                        new { marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.ModelSort, id = ViewBag.auto1 }, ajaxOp)
+                </th>
+                <th class="text-center">Odaberi</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @if (Model.Any())
+            {
+                foreach (var auto in Model)
+                {
+                    <tr>
+                        <td>@auto.Marka</td>
+                        <td>@auto.Model</td>
+                        <td>
+                            <a href="@Url.Action("Usporedi2", "Home", new { id = auto.IdAuto, id2 = ViewBag.auto1 })" class="btn btn-warning">Odaberi</a>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="12" style="text-align:center">Nema rezultata pretrage</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="pager">
+        Ukupno rezultata: @Model.TotalItemCount <br />
+
+        Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("PretrazivanjePartial2",
+            new { page, marka = ViewBag.Marka, model = ViewBag.Model, sort = ViewBag.Sortiranje, id = ViewBag.auto1 }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(ajaxOp))
+    </div>
+</div>
+
+
