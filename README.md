@@ -1,7 +1,7 @@
 # AutoPortal - ASP.NET
 
 # Potrebni alati:
-- XAMMP (Download XAMMP [here](https://www.apachefriends.org/download.html)
+- XAMMP (Download XAMMP [here](https://www.apachefriends.org/download.html))
 - ALAT ZA UPRAVLJANJE S MYSQL BAZOM PODATAKA ([DBForge Studio](https://www.devart.com/dbforge/mysql/studio/), PHPMyAdmin...)
 
 # Pokretanje:
@@ -14,12 +14,17 @@
 
 # Kreirani korisnici:
 ***Korisnik***
+
 Korisničko ime: User
+
 Šifra: user
 
 ***Admin***
+
 Korisnicko ime: Admin
+
 Šifra: admin
 
 Korisničko ime: Admin2
+
 Šifra: admin2
