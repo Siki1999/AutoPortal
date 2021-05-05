@@ -1,30 +1,31 @@
 # AutoPortal - ASP.NET
 
-# Potrebni alati:
+# Needed tools:
 - XAMMP (Download XAMMP [here](https://www.apachefriends.org/download.html))
-- ALAT ZA UPRAVLJANJE S MYSQL BAZOM PODATAKA ([DBForge Studio](https://www.devart.com/dbforge/mysql/studio/), PHPMyAdmin...)
+- Database Management Tool ([DBForge Studio](https://www.devart.com/dbforge/mysql/studio/), PHPMyAdmin...)
 
-# Pokretanje:
-- Pokrenuti XAMPP zatim startati MYSQL modul
-- Pokrenuti program za upravljanje bazom podataka te kreirati novu bazu naziva "baza"
-- Kreirati novog korisnika pod imenom "user" (Uid=user) te šifru korisnika "user123" (Pwd=user123). Zatim omoguciti  korisniku sve ovlasti za bazu "baza"
-- U program za upravljanje s bazom ubaciti zatim pokrenuti .sql skriptu pod nazivom "Baza.sql"
-- Pokrenuti program AutoPortal.sln
+# Installation:
+- Run XAMPP, start MYSQL module
+- Run database management tool and create new database "baza"
+- Create new user, username "user" (Uid=user) and password "user123" (Pwd=user123)
+- Enable all privileges on database "baza" for newly created user
+- In database management tool import and run .sql file "Baza.sql"
+- Run AutoPortal.sln in AutoPortal folder
 - ***DONE***
 
-# Kreirani korisnici:
-***Korisnik***
+# Created users in aplication:
+***User***
 
-Korisničko ime: User
+Username: User
 
-Šifra: user
+Password: user
 
-***Admin***
+***Admins***
 
-Korisnicko ime: Admin
+Username: Admin
 
-Šifra: admin
+Password: admin
 
-Korisničko ime: Admin2
+Username: Admin2
 
-Šifra: admin2
+Password: admin2
