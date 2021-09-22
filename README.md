@@ -3,6 +3,7 @@
 # Needed tools:
 - XAMMP (Download XAMMP [here](https://www.apachefriends.org/download.html))
 - Database Management Tool ([DBForge Studio](https://www.devart.com/dbforge/mysql/studio/), PHPMyAdmin...)
+- Visual Studio (Download Visual Studio [here](https://visualstudio.microsoft.com/downloads/))
 
 # Installation:
 - Run XAMPP, start MYSQL module
