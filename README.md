@@ -1,8 +1,12 @@
 # AutoPortal - ASP.NET
 I created an application in ASP.NET for displaying cars with technical specifications with the possibility of contract meetings.
+
 The cars were stored in a database.
+
 Ability to log in to the application.
+
 Admin has the ability to add new cars, delete existing ones, change specifications, view all appointments and a lot more.
+
 Users have the option of arranging meetings, at what hours and on which day the user wishes, the ability to create a pdf with car model, image and technical specifications.
 
 
